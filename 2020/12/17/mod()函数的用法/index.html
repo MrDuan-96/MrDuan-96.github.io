@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    归档: 2020 |  Mr_DuanのBlog
+     Mr_DuanのBlog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -44,67 +44,200 @@
       
     <main class="content on">
       <section class="outer">
-  
-  <article class="articles">
-    
-    
-    <h1 class="page-type-title">2020</h1>
-    
-    
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2020" class="archive-year">2020</a>
-    </div>
-    <div class="archives">
-      
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/12/17/mod()%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95/" class="archive-article-date">
-  <time datetime="2020-12-17T06:22:28.672Z" itemprop="datePublished">12/17</time>
-</a>
-      
+  <article
+  id="post-mod()函数的用法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+     
+    <div class="article-meta">
+      <a href="/2020/12/17/mod()%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95/" class="article-date">
+  <time datetime="2020-12-17T06:22:28.672Z" itemprop="datePublished">2020-12-17</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">472</span>
+        </span>
+    </span>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/12/02/%E5%9F%BA%E4%BA%8EHexo%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/" class="archive-article-date">
-  <time datetime="2020-12-02T14:28:07.664Z" itemprop="datePublished">12/02</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2020/12/02/%E5%9F%BA%E4%BA%8EHexo%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/"
-    >Windows平台下基于Hexo搭建的个人博客</a> 
-</h2>
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">1 分钟</span>
+        </span>
+    </span>
+</div>
  
-
-    </header>
-    
-    
-  </div>
-</article>
+    </div>
       
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>昨天在学习Matlab的数学函数时，教程中提到取模（mod）与取余（rem）是不同的，今天在网上具体查了一下：</p>
+<p>通常取模运算也叫取余运算，它们返回结果都是余数.rem和mod唯一的区别在于:<br>    当x和y的正负号一样的时候，两个函数结果是等同的；当x和y的符号不同时，rem函数结果的符号和x的一样，而mod和y一样。<br>    这是由于这两个函数的生成机制不同，rem函数采用fix函数，而mod函数采用了floor函数（这两个函数是用来取整的，fix函数向0方向舍入，floor函数向无穷小方向舍入）。<br>    rem（x，y）命令返回的是x-n.*y，如果y不等于0，其中的n = fix(x./y)，而mod(x,y)返回的是x-n.*y，当y不等于0时，n=floor(x./y)</p>
+<p>两个异号整数取模取值规律 （当是小数时也是这个运算规律，这一点好像与C语言的不太一样）</p>
+<p>先将两个整数看作是正数，再作除法运算<br>①能整除时，其值为0<br>②不能整除时，其值=除数×(整商+1)-被除数</p>
+<p>例：mod(36,-10)=-4<br>即：36除以10的整数商为3，加1后为4；其与除数之积为40；再与被数之差为（40-36=4）；取除数的符号。所以值为-4。<br>例：mod(9,1.2)=0.6; </p>
+<p>例：</p>
+<blockquote>
+<blockquote>
+<p>mod(5,2)<br>ans =1                   %“除数”是正，“余数”就是正<br>mod(-5,2)<br>ans =1<br>mod(5,-2)<br>ans =-1                  %“除数”是负，“余数‘就是负<br>mod(-5,-2)<br>ans =-1                  %用rem时，不管“除数”是正是负，“余数”的符号与“被除数”的符号相同<br>rem(5,2)<br>ans =1                   %“被除数”是正，“余数”就是正<br>rem(5,-2);<br>ans =1<br>rem(-5,2)<br>ans =-1                 %“被除数”是负，“余数”就是负<br>rem(-5,-2)<br>ans =-1</p>
+</blockquote>
+</blockquote>
+<p>慢慢体会，两者确实不一样</p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
       
     </div>
-  </div>
-  
-  
+    
 
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2020/12/17/mod()%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2020/12/02/%E5%9F%BA%E4%BA%8EHexo%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Windows平台下基于Hexo搭建的个人博客</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "",
+    app_key: "",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
   
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -258,6 +391,23 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
