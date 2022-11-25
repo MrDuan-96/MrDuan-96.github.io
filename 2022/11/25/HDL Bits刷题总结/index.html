@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Matlab 函数用法 |  Mr_DuanのBlog
+     Mr_DuanのBlog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -45,37 +45,24 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-mod()函数的用法"
+  id="post-HDL Bits刷题总结"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
   data-scroll-reveal
 >
   <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Matlab 函数用法
-</h1>
- 
-
-    </header>
      
     <div class="article-meta">
-      <a href="/2020/12/17/mod()%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95/" class="article-date">
-  <time datetime="2020-12-17T06:22:28.672Z" itemprop="datePublished">2020-12-17</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
-  </div>
-  
+      <a href="/2022/11/25/HDL%20Bits%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2022-11-25T14:28:40.905Z" itemprop="datePublished">2022-11-25</time>
+</a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">472</span>
+            <span class="post-count">280</span>
         </span>
     </span>
 
@@ -91,24 +78,84 @@
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>昨天在学习Matlab的数学函数时，教程中提到取模（mod）与取余（rem）是不同的，今天在网上具体查了一下：</p>
-<p>通常取模运算也叫取余运算，它们返回结果都是余数.rem和mod唯一的区别在于:<br>    当x和y的正负号一样的时候，两个函数结果是等同的；当x和y的符号不同时，rem函数结果的符号和x的一样，而mod和y一样。<br>    这是由于这两个函数的生成机制不同，rem函数采用fix函数，而mod函数采用了floor函数（这两个函数是用来取整的，fix函数向0方向舍入，floor函数向无穷小方向舍入）。<br>    rem（x，y）命令返回的是x-n.*y，如果y不等于0，其中的n = fix(x./y)，而mod(x,y)返回的是x-n.*y，当y不等于0时，n=floor(x./y)</p>
-<p>两个异号整数取模取值规律 （当是小数时也是这个运算规律，这一点好像与C语言的不太一样）</p>
-<p>先将两个整数看作是正数，再作除法运算<br>①能整除时，其值为0<br>②不能整除时，其值=除数×(整商+1)-被除数</p>
-<p>例：mod(36,-10)=-4<br>即：36除以10的整数商为3，加1后为4；其与除数之积为40；再与被数之差为（40-36=4）；取除数的符号。所以值为-4。<br>例：mod(9,1.2)=0.6; </p>
-<p>例：</p>
-<blockquote>
-<blockquote>
-<p>mod(5,2)<br>ans =1                   %“除数”是正，“余数”就是正<br>mod(-5,2)<br>ans =1<br>mod(5,-2)<br>ans =-1                  %“除数”是负，“余数‘就是负<br>mod(-5,-2)<br>ans =-1                  %用rem时，不管“除数”是正是负，“余数”的符号与“被除数”的符号相同<br>rem(5,2)<br>ans =1                   %“被除数”是正，“余数”就是正<br>rem(5,-2);<br>ans =1<br>rem(-5,2)<br>ans =-1                 %“被除数”是负，“余数”就是负<br>rem(-5,-2)<br>ans =-1</p>
-</blockquote>
-</blockquote>
-<p>慢慢体会，两者确实不一样</p>
+  <h1 id="HDL-Bits刷题总结"><a href="#HDL-Bits刷题总结" class="headerlink" title="HDL Bits刷题总结"></a>HDL Bits刷题总结</h1><aside>
+📉 此文章记录自己在HDL Bits刷题的经验，方便之后进行回忆和总结
+
+</aside>
+
+<ul>
+<li><p>00_Verilog Language</p>
+<ul>
+<li><p>Basic</p>
+<ul>
+<li><p>NOR gate 或非门</p>
+  <aside>
+  📉 与门：AND
+  非门 ：NOT 
+  或门：OR
+  或非门：NOR
+  异非门：XOR     
+  异或非门：XNOR      $Y=\overline{(A+B)}$
+  或非门→输入两信号同时为0 时，才可能输出高电平1
+
+  </aside>
+
+<p>  <img src="HDL%20Bits%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93%2067f40aed7eee45eba03b4205751421ea/Untitled.png" alt="Untitled"></p>
+  <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b, </span><br><span class="line">    <span class="keyword">output</span> out );</span><br><span class="line">    </span><br><span class="line"><span class="comment">//first way</span></span><br><span class="line">    <span class="keyword">assign</span> out = ~(a|b);</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XOR gate 异或门</p>
+  <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b, </span><br><span class="line">    <span class="keyword">output</span> out );</span><br><span class="line">    </span><br><span class="line"><span class="comment">//first way</span></span><br><span class="line">    <span class="keyword">assign</span> out = a^b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XNOR gate 异或非门</p>
+  <aside>
+  📉 异或非门：XNOR      
+  $Y=\overline{(A+B)}$
+
+  </aside>
+
+  <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b, </span><br><span class="line">    <span class="keyword">output</span> out );</span><br><span class="line">    </span><br><span class="line"><span class="comment">//first way</span></span><br><span class="line">    <span class="keyword">assign</span> out = ~(a^b);</span><br><span class="line"><span class="comment">//second way</span></span><br><span class="line">		<span class="keyword">assign</span> out = a ~^ b;</span><br><span class="line"><span class="comment">//third way</span></span><br><span class="line">		<span class="keyword">assign</span> out = a ^~ b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Declaring wires 声明中间的线</p>
+<p>  <img src="HDL%20Bits%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93%2067f40aed7eee45eba03b4205751421ea/Untitled%201.png" alt="Untitled"></p>
+  <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">`<span class="meta-keyword">default_nettype</span> none</span></span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> a,</span><br><span class="line">    <span class="keyword">input</span> b,</span><br><span class="line">    <span class="keyword">input</span> c,</span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> out,</span><br><span class="line">    <span class="keyword">output</span> out_n   ); </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">wire</span> w1,w2;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> w1 = a&amp;b;</span><br><span class="line">    <span class="keyword">assign</span> w2 = c&amp;d;</span><br><span class="line">    <span class="keyword">assign</span> out = w1|w2;    </span><br><span class="line">    <span class="keyword">assign</span> out_n = ~out;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>7458 Chip 芯片</p>
+<p>  <img src="HDL%20Bits%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93%2067f40aed7eee45eba03b4205751421ea/Untitled%202.png" alt="Untitled"></p>
+  <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module ( </span><br><span class="line">    <span class="keyword">input</span> p1a, p1b, p1c, p1d, p1e, p1f,</span><br><span class="line">    <span class="keyword">output</span> p1y,</span><br><span class="line">    <span class="keyword">input</span> p2a, p2b, p2c, p2d,</span><br><span class="line">    <span class="keyword">output</span> p2y );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">wire</span> p1_out1,p1_out2,p2_out1,p2_out2;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> p1_out1 = p1a &amp; p1b &amp; p1c;</span><br><span class="line">    <span class="keyword">assign</span> p1_out2 = p1d &amp; p1e &amp; p1f;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> p2_out1 = p2a &amp; p2b;</span><br><span class="line">    <span class="keyword">assign</span> p2_out2 = p2c &amp; p2d;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> p1y = p1_out1 | p1_out2;</span><br><span class="line">    <span class="keyword">assign</span> p2y = p2_out1 | p2_out2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Vectors</p>
+<ul>
+<li><p>Vectors</p>
+  <aside>
+  📉
+
+  </aside>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>01_Circuits</p>
+</li>
+<li><p>02_Verification:Reading Simulations</p>
+</li>
+<li><p>03_Verification:Wirting Testbenches</p>
+</li>
+<li><p>04_CS450</p>
+</li>
+</ul>
+<p><img src="HDL%20Bits%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93%2067f40aed7eee45eba03b4205751421ea/Untitled%202.png" alt="Untitled"></p>
  
       <!-- reward -->
       
@@ -179,32 +226,21 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2020/12/17/mod()%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/25/HDL%20Bits%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li></ul>
-
     </footer>
   </div>
 
    
   <nav class="article-nav">
     
-      <a href="/2022/11/25/HDL%20Bits%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            (no title)
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/12/02/%E5%9F%BA%E4%BA%8EHexo%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%B9%B3%E5%8F%B0/" class="article-nav-link">
+      <a href="/2020/12/17/mod()%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Windows平台下基于Hexo搭建的个人博客</div>
+        <div class="article-nav-title">Matlab 函数用法</div>
       </a>
     
   </nav>
