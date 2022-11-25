@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
+    <title>Matlab 函数用法</title>
     <url>/2020/12/17/mod()%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[<p>昨天在学习Matlab的数学函数时，教程中提到取模（mod）与取余（rem）是不同的，今天在网上具体查了一下：</p>
 <p>通常取模运算也叫取余运算，它们返回结果都是余数.rem和mod唯一的区别在于:<br>    当x和y的正负号一样的时候，两个函数结果是等同的；当x和y的符号不同时，rem函数结果的符号和x的一样，而mod和y一样。<br>    这是由于这两个函数的生成机制不同，rem函数采用fix函数，而mod函数采用了floor函数（这两个函数是用来取整的，fix函数向0方向舍入，floor函数向无穷小方向舍入）。<br>    rem（x，y）命令返回的是x-n.*y，如果y不等于0，其中的n = fix(x./y)，而mod(x,y)返回的是x-n.*y，当y不等于0时，n=floor(x./y)</p>
@@ -16,6 +16,12 @@
 </blockquote>
 <p>慢慢体会，两者确实不一样</p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
   </entry>
   <entry>
     <title>Windows平台下基于Hexo搭建的个人博客</title>
