@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-09-06T15:57:00.758Z</updated>
+  <updated>2023-12-02T07:39:40.000Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://example.com/2023/12/02/SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/"/>
+    <id>http://example.com/2023/12/02/SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/</id>
+    <published>2023-12-02T15:43:18.688Z</published>
+    <updated>2023-12-02T07:39:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="SPI介绍及在Mcal中相关配置"><a href="#SPI介绍及在Mcal中相关配置" class="headerlink" title="SPI介绍及在Mcal中相关配置"></a>SPI介绍及在Mcal中相关配置</h1><aside>💡 SPI：Serial Peripheral Interface 串行外围接口，从名字中可以看出**串行，接口，**表明其通信方式为串行通信。</aside><p>SPI通信一般为四根信号，分为为SCK、CS、MOSI及MISO，其通信方式为全双工，有主设备和从设备之分，但是不存在收发设备之分，因为在主设备发送的同时也在接收者从设备的数据。其四个信号分别代表着：</p><p>SCK：系统时钟</p><p>CS：片选信号<br>MOSI：主发从收</p><p>MISO：主收从发</p><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/SPI_NORMAL.bmp" alt="SPI_NORMAL.bmp"></p><p>SPI通信的逻辑是：</p><aside>💡 1：主设备通过CS脚选中从设备（低有效/高有效）2：经过一段保持时间，CLK按照设置的频率开始工作3：MOSI和MISO分别发出数据</aside><p>其中，将片选之前CLK的初始相位和跳变沿开始采样的时间可以分为四种模式：</p><p>CPOL：Clock Polarity 信号极性，即在片选之前后CLK的初始相位为高（bit = 1）或低（bit = 0）<br>CPHA：Clock Phase 信号相位，即信号采样时处于一个信号周期的Leading时刻（bit = 0）还是Trailing时刻（bit = 1）</p><table><thead><tr><th>Mode</th><th>CPOL</th><th>CPHA</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>2</td><td>1</td><td>0</td></tr><tr><td>3</td><td>1</td><td>1</td></tr></tbody></table><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled.bmp" alt="Untitled"></p><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%201.bmp" alt="Untitled"></p><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%202.bmp" alt="Untitled"></p><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%203.bmp" alt="Untitled"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;SPI介绍及在Mcal中相关配置&quot;&gt;&lt;a href=&quot;#SPI介绍及在Mcal中相关配置&quot; class=&quot;headerlink&quot; title=&quot;SPI介绍及在Mcal中相关配置&quot;&gt;&lt;/a&gt;SPI介绍及在Mcal中相关配置&lt;/h1&gt;&lt;aside&gt;
+💡 SPI：Se</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title></title>
