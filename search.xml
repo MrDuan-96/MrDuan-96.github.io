@@ -95,7 +95,7 @@ CPHA：指的是建立通讯之后，信号的采样时刻在一个周期CLK的�
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>SPI介绍及在Mcal中相关配置</title>
     <url>/2023/12/02/SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h1 id="SPI介绍及在Mcal中相关配置"><a href="#SPI介绍及在Mcal中相关配置" class="headerlink" title="SPI介绍及在Mcal中相关配置"></a>SPI介绍及在Mcal中相关配置</h1><aside>
 💡 SPI：Serial Peripheral Interface 串行外围接口，从名字中可以看出**串行，接口，**表明其通信方式为串行通信。
@@ -151,14 +151,17 @@ CPHA：指的是建立通讯之后，信号的采样时刻在一个周期CLK的�
 <p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%202.bmp" alt="Untitled"></p>
 <p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%203.bmp" alt="Untitled"></p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>CAN通信</title>
     <url>/2023/09/06/CAN/</url>
-    <content><![CDATA[<h1 id="CAN通信"><a href="#CAN通信" class="headerlink" title="CAN通信"></a>CAN通信</h1><hr>
-<p>title: Windows平台下基于Hexo搭建的个人博客<br>date: 2020-12-02 22：37：00<br>categories: 技术 </p>
-<hr>
-<h1 id="一：什么是CAN通信"><a href="#一：什么是CAN通信" class="headerlink" title="一：什么是CAN通信"></a>一：什么是CAN通信</h1><p>CAN通信全称 Controller Area Network，也称控制器区域网，最早由博世公司提出，用来应用于汽车电子领域，进而保证多个ECU之间的相互通信。</p>
+    <content><![CDATA[<h1 id="CAN通信"><a href="#CAN通信" class="headerlink" title="CAN通信"></a>CAN通信</h1><h1 id="一：什么是CAN通信"><a href="#一：什么是CAN通信" class="headerlink" title="一：什么是CAN通信"></a>一：什么是CAN通信</h1><p>CAN通信全称 Controller Area Network，也称控制器区域网，最早由博世公司提出，用来应用于汽车电子领域，进而保证多个ECU之间的相互通信。</p>
 <p>为什么博世要提出这个通信协议呢？在当时其他的通信标准不能用吗？</p>
 <p>其实博世公司早在20世纪80年代就提出该标准，因为在当时那个年代，汽车上的ECU还不是特别多，OEM厂主要通过线与线直接连接的方式进行通信，需要MCU与每个ECU建立连接，这种方式在ECU少的情况下尚可，但如果出现了问题，诊断起来就非常困难。</p>
 <p>此时博世的工程师就和德国几个高校的教授一起思考：有没有可能设计一种串行的通信方式，将所有的ECU挂载在总线上，通过仲裁的机制去访问不同的ECU，这样也可以避免线束过多，诊断起来也比较方便，于是乎，CAN通信就应运而生。让我们记住这几个大佬的名字：德国 Braunschweig-Wolfenbüttel 的Applied Science 大学教授 <strong>WolfhardLawrenz 博士，Karlsruhe大学的教授Horst Wettstein 博士，Bosch 公司的 Wolfgang Borst、 Wolfgang Botzenhard、Otto Karl、 Helmut Schelling、Jan Unruh，</strong>虽然我一定记不得名字，但是他们的事迹一定会一直存在在这个世界上。</p>
@@ -177,6 +180,12 @@ CPHA：指的是建立通讯之后，信号的采样时刻在一个周期CLK的�
 <p>实际上这种情况是存在的，这就牵扯到CAN通信的另一个知识点，仲裁机制。</p>
 <p>在介绍仲裁机制之前，先让我们来了解一下CAN通信发送的数据是什么样子的。此处以最简单的CAN通信报文为例。</p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
   </entry>
   <entry>
     <title>HDL Bits刷题总结</title>

@@ -41,11 +41,11 @@
   </entry>
   
   <entry>
-    <title></title>
+    <title>SPI介绍及在Mcal中相关配置</title>
     <link href="http://example.com/2023/12/02/SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/"/>
     <id>http://example.com/2023/12/02/SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/</id>
     <published>2023-12-02T15:43:18.688Z</published>
-    <updated>2023-12-02T07:39:40.000Z</updated>
+    <updated>2024-03-10T13:49:21.187Z</updated>
     
     <content type="html"><![CDATA[<h1 id="SPI介绍及在Mcal中相关配置"><a href="#SPI介绍及在Mcal中相关配置" class="headerlink" title="SPI介绍及在Mcal中相关配置"></a>SPI介绍及在Mcal中相关配置</h1><aside>💡 SPI：Serial Peripheral Interface 串行外围接口，从名字中可以看出**串行，接口，**表明其通信方式为串行通信。</aside><p>SPI通信一般为四根信号，分为为SCK、CS、MOSI及MISO，其通信方式为全双工，有主设备和从设备之分，但是不存在收发设备之分，因为在主设备发送的同时也在接收者从设备的数据。其四个信号分别代表着：</p><p>SCK：系统时钟</p><p>CS：片选信号<br>MOSI：主发从收</p><p>MISO：主收从发</p><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/SPI_NORMAL.bmp" alt="SPI_NORMAL.bmp"></p><p>SPI通信的逻辑是：</p><aside>💡 1：主设备通过CS脚选中从设备（低有效/高有效）2：经过一段保持时间，CLK按照设置的频率开始工作3：MOSI和MISO分别发出数据</aside><p>其中，将片选之前CLK的初始相位和跳变沿开始采样的时间可以分为四种模式：</p><p>CPOL：Clock Polarity 信号极性，即在片选之前后CLK的初始相位为高（bit = 1）或低（bit = 0）<br>CPHA：Clock Phase 信号相位，即信号采样时处于一个信号周期的Leading时刻（bit = 0）还是Trailing时刻（bit = 1）</p><table><thead><tr><th>Mode</th><th>CPOL</th><th>CPHA</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>2</td><td>1</td><td>0</td></tr><tr><td>3</td><td>1</td><td>1</td></tr></tbody></table><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled.bmp" alt="Untitled"></p><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%201.bmp" alt="Untitled"></p><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%202.bmp" alt="Untitled"></p><p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%203.bmp" alt="Untitled"></p>]]></content>
     
@@ -58,27 +58,34 @@
     
     
     
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="教程" scheme="http://example.com/tags/%E6%95%99%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
-    <title></title>
+    <title>CAN通信</title>
     <link href="http://example.com/2023/09/06/CAN/"/>
     <id>http://example.com/2023/09/06/CAN/</id>
     <published>2023-09-06T15:54:50.974Z</published>
-    <updated>2023-09-06T15:57:00.758Z</updated>
+    <updated>2024-03-10T13:47:53.039Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="CAN通信"><a href="#CAN通信" class="headerlink" title="CAN通信"></a>CAN通信</h1><hr><p>title: Windows平台下基于Hexo搭建的个人博客<br>date: 2020-12-02 22：37：00<br>categories: 技术 </p><hr><h1 id="一：什么是CAN通信"><a href="#一：什么是CAN通信" class="headerlink" title="一：什么是CAN通信"></a>一：什么是CAN通信</h1><p>CAN通信全称 Controller Area Network，也称控制器区域网，最早由博世公司提出，用来应用于汽车电子领域，进而保证多个ECU之间的相互通信。</p><p>为什么博世要提出这个通信协议呢？在当时其他的通信标准不能用吗？</p><p>其实博世公司早在20世纪80年代就提出该标准，因为在当时那个年代，汽车上的ECU还不是特别多，OEM厂主要通过线与线直接连接的方式进行通信，需要MCU与每个ECU建立连接，这种方式在ECU少的情况下尚可，但如果出现了问题，诊断起来就非常困难。</p><p>此时博世的工程师就和德国几个高校的教授一起思考：有没有可能设计一种串行的通信方式，将所有的ECU挂载在总线上，通过仲裁的机制去访问不同的ECU，这样也可以避免线束过多，诊断起来也比较方便，于是乎，CAN通信就应运而生。让我们记住这几个大佬的名字：德国 Braunschweig-Wolfenbüttel 的Applied Science 大学教授 <strong>WolfhardLawrenz 博士，Karlsruhe大学的教授Horst Wettstein 博士，Bosch 公司的 Wolfgang Borst、 Wolfgang Botzenhard、Otto Karl、 Helmut Schelling、Jan Unruh，</strong>虽然我一定记不得名字，但是他们的事迹一定会一直存在在这个世界上。</p><p>由于CAN通信简单，使用，可靠的特点，后来不仅仅在汽车行业，也在自动化、船舶等诸多行业发展光大，一直到21世纪20年代，仍然可以说引领者串行通信行业的发展。</p><p>CAN网络是数字信号进行传输的，那么CAN的“0”和“1”怎么表示呢？这里就引入一个概念，CAN_H和CAN_L，我们通过这两个信号之间的电位差来对信号进行描述。</p><p>如果CAN_H-CAN_L = 0V ，那么我们定义其为CAN信号为隐形电平</p><p>如果CAN_H-CAN_L &gt; 1.5V ，那么此时我们定义CAN信号为显性电平，通常来说，这个压差只要满足1.5-2.5V之间，我们就可以认为其为显性电平。</p><p><img src="https://pic.imgdb.cn/item/64f8a056661c6c8e5412c155.png" alt="Untitled"></p><p>从图中我们也能看的出来，当隐性电平时，表示为逻辑1，当为显性电平时，表示为逻辑0。</p><p>为什么要这么做呢？直接像SPI那样从一根线表示0和1呢？非要用相减的方法？</p><p>这是因为采用这种方法可以大大得增加他的抗干扰能力，提高系统的稳定性。</p><h1 id="二：CAN通信的用法"><a href="#二：CAN通信的用法" class="headerlink" title="二：CAN通信的用法"></a>二：CAN通信的用法</h1><p>前面说了CAN通信的起源，那为什么说CAN通信一出来就这么好？他优势在哪里？串行总线又是个什么东西？</p><p><img src="https://pic.imgdb.cn/item/64f8a056661c6c8e5412c148.png"></p><p>从这个图，大致可以看出，全部的ECU挂在一条总线上，采用CAN通信，并没有主从之分，只要总线不处于忙的状态，全部的ECU都可以在总线上发现相关报文。</p><p>那么有没有可能存在一种情况，比如ECU1和ECU2同时请求在总线上发报文？</p><p>实际上这种情况是存在的，这就牵扯到CAN通信的另一个知识点，仲裁机制。</p><p>在介绍仲裁机制之前，先让我们来了解一下CAN通信发送的数据是什么样子的。此处以最简单的CAN通信报文为例。</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="CAN通信"><a href="#CAN通信" class="headerlink" title="CAN通信"></a>CAN通信</h1><h1 id="一：什么是CAN通信"><a href="#一：什么是CAN通信" class="headerlink" title="一：什么是CAN通信"></a>一：什么是CAN通信</h1><p>CAN通信全称 Controller Area Network，也称控制器区域网，最早由博世公司提出，用来应用于汽车电子领域，进而保证多个ECU之间的相互通信。</p><p>为什么博世要提出这个通信协议呢？在当时其他的通信标准不能用吗？</p><p>其实博世公司早在20世纪80年代就提出该标准，因为在当时那个年代，汽车上的ECU还不是特别多，OEM厂主要通过线与线直接连接的方式进行通信，需要MCU与每个ECU建立连接，这种方式在ECU少的情况下尚可，但如果出现了问题，诊断起来就非常困难。</p><p>此时博世的工程师就和德国几个高校的教授一起思考：有没有可能设计一种串行的通信方式，将所有的ECU挂载在总线上，通过仲裁的机制去访问不同的ECU，这样也可以避免线束过多，诊断起来也比较方便，于是乎，CAN通信就应运而生。让我们记住这几个大佬的名字：德国 Braunschweig-Wolfenbüttel 的Applied Science 大学教授 <strong>WolfhardLawrenz 博士，Karlsruhe大学的教授Horst Wettstein 博士，Bosch 公司的 Wolfgang Borst、 Wolfgang Botzenhard、Otto Karl、 Helmut Schelling、Jan Unruh，</strong>虽然我一定记不得名字，但是他们的事迹一定会一直存在在这个世界上。</p><p>由于CAN通信简单，使用，可靠的特点，后来不仅仅在汽车行业，也在自动化、船舶等诸多行业发展光大，一直到21世纪20年代，仍然可以说引领者串行通信行业的发展。</p><p>CAN网络是数字信号进行传输的，那么CAN的“0”和“1”怎么表示呢？这里就引入一个概念，CAN_H和CAN_L，我们通过这两个信号之间的电位差来对信号进行描述。</p><p>如果CAN_H-CAN_L = 0V ，那么我们定义其为CAN信号为隐形电平</p><p>如果CAN_H-CAN_L &gt; 1.5V ，那么此时我们定义CAN信号为显性电平，通常来说，这个压差只要满足1.5-2.5V之间，我们就可以认为其为显性电平。</p><p><img src="https://pic.imgdb.cn/item/64f8a056661c6c8e5412c155.png" alt="Untitled"></p><p>从图中我们也能看的出来，当隐性电平时，表示为逻辑1，当为显性电平时，表示为逻辑0。</p><p>为什么要这么做呢？直接像SPI那样从一根线表示0和1呢？非要用相减的方法？</p><p>这是因为采用这种方法可以大大得增加他的抗干扰能力，提高系统的稳定性。</p><h1 id="二：CAN通信的用法"><a href="#二：CAN通信的用法" class="headerlink" title="二：CAN通信的用法"></a>二：CAN通信的用法</h1><p>前面说了CAN通信的起源，那为什么说CAN通信一出来就这么好？他优势在哪里？串行总线又是个什么东西？</p><p><img src="https://pic.imgdb.cn/item/64f8a056661c6c8e5412c148.png"></p><p>从这个图，大致可以看出，全部的ECU挂在一条总线上，采用CAN通信，并没有主从之分，只要总线不处于忙的状态，全部的ECU都可以在总线上发现相关报文。</p><p>那么有没有可能存在一种情况，比如ECU1和ECU2同时请求在总线上发报文？</p><p>实际上这种情况是存在的，这就牵扯到CAN通信的另一个知识点，仲裁机制。</p><p>在介绍仲裁机制之前，先让我们来了解一下CAN通信发送的数据是什么样子的。此处以最简单的CAN通信报文为例。</p>]]></content>
     
     
       
       
-    <summary type="html">&lt;h1 id=&quot;CAN通信&quot;&gt;&lt;a href=&quot;#CAN通信&quot; class=&quot;headerlink&quot; title=&quot;CAN通信&quot;&gt;&lt;/a&gt;CAN通信&lt;/h1&gt;&lt;hr&gt;
-&lt;p&gt;title: Windows平台下基于Hexo搭建的个人博客&lt;br&gt;date: 2020-12-02 22</summary>
+    <summary type="html">&lt;h1 id=&quot;CAN通信&quot;&gt;&lt;a href=&quot;#CAN通信&quot; class=&quot;headerlink&quot; title=&quot;CAN通信&quot;&gt;&lt;/a&gt;CAN通信&lt;/h1&gt;&lt;h1 id=&quot;一：什么是CAN通信&quot;&gt;&lt;a href=&quot;#一：什么是CAN通信&quot; class=&quot;headerlink&quot; </summary>
       
     
     
     
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="教程" scheme="http://example.com/tags/%E6%95%99%E7%A8%8B/"/>
     
   </entry>
   
