@@ -1,32 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CAN通信</title>
-    <url>/2023/09/06/CAN/</url>
-    <content><![CDATA[<h1 id="CAN通信"><a href="#CAN通信" class="headerlink" title="CAN通信"></a>CAN通信</h1><h1 id="一：什么是CAN通信"><a href="#一：什么是CAN通信" class="headerlink" title="一：什么是CAN通信"></a>一：什么是CAN通信</h1><p>CAN通信全称 Controller Area Network，也称控制器区域网，最早由博世公司提出，用来应用于汽车电子领域，进而保证多个ECU之间的相互通信。</p>
-<p>为什么博世要提出这个通信协议呢？在当时其他的通信标准不能用吗？</p>
-<p>其实博世公司早在20世纪80年代就提出该标准，因为在当时那个年代，汽车上的ECU还不是特别多，OEM厂主要通过线与线直接连接的方式进行通信，需要MCU与每个ECU建立连接，这种方式在ECU少的情况下尚可，但如果出现了问题，诊断起来就非常困难。</p>
-<p>此时博世的工程师就和德国几个高校的教授一起思考：有没有可能设计一种串行的通信方式，将所有的ECU挂载在总线上，通过仲裁的机制去访问不同的ECU，这样也可以避免线束过多，诊断起来也比较方便，于是乎，CAN通信就应运而生。让我们记住这几个大佬的名字：德国 Braunschweig-Wolfenbüttel 的Applied Science 大学教授 <strong>WolfhardLawrenz 博士，Karlsruhe大学的教授Horst Wettstein 博士，Bosch 公司的 Wolfgang Borst、 Wolfgang Botzenhard、Otto Karl、 Helmut Schelling、Jan Unruh，</strong>虽然我一定记不得名字，但是他们的事迹一定会一直存在在这个世界上。</p>
-<p>由于CAN通信简单，使用，可靠的特点，后来不仅仅在汽车行业，也在自动化、船舶等诸多行业发展光大，一直到21世纪20年代，仍然可以说引领者串行通信行业的发展。</p>
-<p>CAN网络是数字信号进行传输的，那么CAN的“0”和“1”怎么表示呢？这里就引入一个概念，CAN_H和CAN_L，我们通过这两个信号之间的电位差来对信号进行描述。</p>
-<p>如果CAN_H-CAN_L = 0V ，那么我们定义其为CAN信号为隐形电平</p>
-<p>如果CAN_H-CAN_L &gt; 1.5V ，那么此时我们定义CAN信号为显性电平，通常来说，这个压差只要满足1.5-2.5V之间，我们就可以认为其为显性电平。</p>
-<p><img src="https://pic.imgdb.cn/item/64f8a056661c6c8e5412c155.png" alt="Untitled"></p>
-<p>从图中我们也能看的出来，当隐性电平时，表示为逻辑1，当为显性电平时，表示为逻辑0。</p>
-<p>为什么要这么做呢？直接像SPI那样从一根线表示0和1呢？非要用相减的方法？</p>
-<p>这是因为采用这种方法可以大大得增加他的抗干扰能力，提高系统的稳定性。</p>
-<h1 id="二：CAN通信的用法"><a href="#二：CAN通信的用法" class="headerlink" title="二：CAN通信的用法"></a>二：CAN通信的用法</h1><p>前面说了CAN通信的起源，那为什么说CAN通信一出来就这么好？他优势在哪里？串行总线又是个什么东西？</p>
-<p><img src="https://pic.imgdb.cn/item/64f8a056661c6c8e5412c148.png"></p>
-<p>从这个图，大致可以看出，全部的ECU挂在一条总线上，采用CAN通信，并没有主从之分，只要总线不处于忙的状态，全部的ECU都可以在总线上发现相关报文。</p>
-<p>那么有没有可能存在一种情况，比如ECU1和ECU2同时请求在总线上发报文？</p>
-<p>实际上这种情况是存在的，这就牵扯到CAN通信的另一个知识点，仲裁机制。</p>
-<p>在介绍仲裁机制之前，先让我们来了解一下CAN通信发送的数据是什么样子的。此处以最简单的CAN通信报文为例。</p>
-]]></content>
+    <title>SPI通信详细介绍</title>
+    <url>/2024/03/10/SPI%E9%80%9A%E4%BF%A1%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<h1 id="SPI通信详细介绍"><a href="#SPI通信详细介绍" class="headerlink" title="SPI通信详细介绍"></a>SPI通信详细介绍</h1><h1 id="SPI简要概述"><a href="#SPI简要概述" class="headerlink" title="SPI简要概述"></a>SPI简要概述</h1><p>SPI通信英文全称（Serial Peripheral Interface）串行外设接口，从其名称中可以看出，其通信方式为<strong>串行</strong>通信，其主要应用于MCU与外设之间的通信。此外，由于其通信速率较快（由SPI的<strong>SCK</strong>管脚定义），稳定可靠渐渐发展为主流的通信方式。</p>
+<h1 id="SPI信号定义"><a href="#SPI信号定义" class="headerlink" title="SPI信号定义"></a>SPI信号定义</h1><p>SPI通信一般为四根信号，分为<strong>SCK(Serial Clock)**串行时钟、</strong>CS(Chip Select)<strong>片选、</strong>MOSI(Master Output Slave Input)<strong>主发从收及</strong>MISO(Master Input Slave Output)<strong>从发主收</strong>。<strong>从信号定义可以看出其拥有系统时钟，通讯方式为</strong>同步通讯。<strong>还可以看出其收发模式可以分为主发和从发两种，由于其收发信号线为两根，因此主机在进行发送的同时，从机也可以将数据发送给主机。因此，其为全双工通信。综上所述，我们可以了解到SPI通信是一种</strong>同步、全双工、串行**的一种通讯方式。</p>
+<p>SPI分为主设备和从设备之分，但在同一个时刻，只能有一个主设备，但可以有多个从设备。主设备通过控制不同的片选引脚进而与某一个从设备建立通信。因此按照主设备与从设备的数量可以分为<strong>一对一</strong>和<strong>一对多</strong>之分。</p>
+<ul>
+<li><p>一对一<br><a href="https://imgse.com/i/pFyq6r6"><img src="https://s21.ax1x.com/2024/03/10/pFyq6r6.png" alt="pFyq6r6.png"></a></p>
+</li>
+<li><p>一对多<br><a href="https://imgse.com/i/pFyqcqK"><img src="https://s21.ax1x.com/2024/03/10/pFyqcqK.png" alt="pFyqcqK.png"></a></p>
+</li>
+</ul>
+<h1 id="SPI通信时序"><a href="#SPI通信时序" class="headerlink" title="SPI通信时序"></a>SPI通信时序</h1><aside>
+💡 当主设备对从设备发送数据时：
+
+<ol>
+<li>拉低（拉高）片选脚，选中从设备，告诉从设备预建立通信（高有效/低有效由芯片决定）</li>
+<li>主设备发送CLK信号，主从设备按照规定的CLK频率进行通信（在idle状态下的CLK初始极性（H/L）可以划分为不同的模式）</li>
+<li>主设备通过MOSI引脚发送数据到从机，其中高位先发，低位后发。SPI规定，每8/16位为一组，即（即每次最多可以传输两个字节），可以传输多次（即连续发送）</li>
+<li>从设备通过MISO引脚发送数据到主机，同MOSI引脚功能类似</aside>
+
+</li>
+</ol>
+<p><a href="https://imgse.com/i/pFyqTMt"><img src="https://s21.ax1x.com/2024/03/10/pFyqTMt.png" alt="pFyqTMt.png"></a></p>
+<h1 id="SPI模式"><a href="#SPI模式" class="headerlink" title="SPI模式"></a>SPI模式</h1><p>其中，将片选之前<strong>CLK的初始相位</strong>和<strong>开始采样的时间</strong>可以划分为<strong>四种模式</strong>：</p>
+<p><strong>CPOL</strong>：<strong>Clock Polarity</strong> 信号极性，即在片选之前（CLK空闲状态），CLK的初始相位为高（bit = 1）或低（bit = 0）</p>
+<p><strong>CPHA</strong>：<strong>Clock Phase</strong> 信号相位，定义了信号的采集时间。CPHA=0，表示在SCK的第一个跳变沿（上升沿/下降沿）进行数据采样，在第一个跳变沿进行数据传输。CPHA=1，表示在SCK的第二个跳变沿（上升沿/下降沿）进行数据采样，在第一个跳变沿进行数据传输。</p>
+<p>即信号采样时处于一个信号周期的<code>Leading</code>时刻（bit = 0）还是<code>Trailing</code>时刻（bit = 1）</p>
+<aside>
+💡 CPOL：显而易见，指的是未建立SPI通讯时，（CS脚没有被选中时），CLK引脚的初始电平状态
+CPHA：指的是建立通讯之后，信号的采样时刻在一个周期CLK的第一个/第二个边沿
+</aside>
+
+<ul>
+<li>Tip：芯片具体支持/使用的哪种SPI通讯模式由芯片本身决定（具体看芯片手册的SPI时序图）</li>
+</ul>
+<p>具体可以表示为：</p>
+<table>
+<thead>
+<tr>
+<th>SPI_Mode</th>
+<th>CPOL</th>
+<th>CPHA</th>
+<th>空闲时SCK状态</th>
+<th>采样时刻</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>低电平</td>
+<td>CLK的第一个跳变沿</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>低电平</td>
+<td>CLK的第二个跳变沿</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>高电平</td>
+<td>CLK的第一个跳变沿</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>高电平</td>
+<td>CLK的第二个跳变沿</td>
+</tr>
+</tbody></table>
+<ul>
+<li>下面分别给出四种通讯模式下的SPI时序图（以CS低有效，一次发送8Bit的数据为例子）</li>
+</ul>
+<h3 id="Mode0：CPOL-0，CPHA-0"><a href="#Mode0：CPOL-0，CPHA-0" class="headerlink" title="Mode0：CPOL=0，CPHA=0"></a>Mode0：CPOL=0，CPHA=0</h3><p><a href="https://imgse.com/i/pFyq7sP"><img src="https://s21.ax1x.com/2024/03/10/pFyq7sP.png" alt="pFyq7sP.png"></a></p>
+<h3 id="Mode1：CPOL-0，CPHA-1"><a href="#Mode1：CPOL-0，CPHA-1" class="headerlink" title="Mode1：CPOL=0，CPHA=1"></a>Mode1：CPOL=0，CPHA=1</h3><p><a href="https://imgse.com/i/pFyqHqf"><img src="https://s21.ax1x.com/2024/03/10/pFyqHqf.png" alt="pFyqHqf.png"></a></p>
+<h3 id="Mode2：CPOL-1，CPHA-0"><a href="#Mode2：CPOL-1，CPHA-0" class="headerlink" title="Mode2：CPOL=1，CPHA=0"></a>Mode2：CPOL=1，CPHA=0</h3><p><a href="https://imgse.com/i/pFyqLdS"><img src="https://s21.ax1x.com/2024/03/10/pFyqLdS.png" alt="pFyqLdS.png"></a></p>
+<h3 id="Mode3：CPOL-1，CPHA-1"><a href="#Mode3：CPOL-1，CPHA-1" class="headerlink" title="Mode3：CPOL=1，CPHA=1"></a>Mode3：CPOL=1，CPHA=1</h3><p><a href="https://imgse.com/i/pFyqqZ8"><img src="https://s21.ax1x.com/2024/03/10/pFyqqZ8.png" alt="pFyqqZ8.png"></a></p>
+<h1 id="伪代码实现"><a href="#伪代码实现" class="headerlink" title="伪代码实现"></a>伪代码实现</h1><p>在数据发送过程中，主设备通过MOSI线发送数据，从设备通过MISO线接收数据。数据的发送速率由CLK信号的频率决定。SPI协议支持全双工通信，即在主设备发送数据的同时，也可以接收从设备的数据。</p>
+<p>在代码实现过程中，首先需要配置SPI的工作模式，然后在主设备上设置CS信号为低电平（<strong>假设低有效</strong>），使从设备被选中。然后，主设备通过MOSI线发送数据，从设备通过MISO线接收数据。数据发送完毕后，主设备将CS信号设置为高电平，结束数据传输。</p>
+<p>以下是SPI通信的伪代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 配置SPI为Mode0</span><br><span class="line">SPI_Config(Mode0);</span><br><span class="line">&#x2F;&#x2F; 设置CS信号为低电平</span><br><span class="line">CS &#x3D; 0;</span><br><span class="line">&#x2F;&#x2F; 通过MOSI线发送数据</span><br><span class="line">SPI_Send(data);</span><br><span class="line">&#x2F;&#x2F; 通过MISO线接收数据</span><br><span class="line">data &#x3D; SPI_Receive();</span><br><span class="line">&#x2F;&#x2F; 设置CS信号为高电平</span><br><span class="line">CS &#x3D; 1;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>技术</category>
       </categories>
       <tags>
-        <tag>教程</tag>
+        <tag>SPI</tag>
       </tags>
   </entry>
   <entry>
@@ -85,6 +150,115 @@
 <p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%201.bmp" alt="Untitled"></p>
 <p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%202.bmp" alt="Untitled"></p>
 <p><img src="SPI%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%9C%A8Mcal%E4%B8%AD%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20f497bee52070403b8a1b543ee2fa63be/Untitled%203.bmp" alt="Untitled"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CAN通信</title>
+    <url>/2023/09/06/CAN/</url>
+    <content><![CDATA[<h1 id="CAN通信"><a href="#CAN通信" class="headerlink" title="CAN通信"></a>CAN通信</h1><h1 id="一：什么是CAN通信"><a href="#一：什么是CAN通信" class="headerlink" title="一：什么是CAN通信"></a>一：什么是CAN通信</h1><p>CAN通信全称 Controller Area Network，也称控制器区域网，最早由博世公司提出，用来应用于汽车电子领域，进而保证多个ECU之间的相互通信。</p>
+<p>为什么博世要提出这个通信协议呢？在当时其他的通信标准不能用吗？</p>
+<p>其实博世公司早在20世纪80年代就提出该标准，因为在当时那个年代，汽车上的ECU还不是特别多，OEM厂主要通过线与线直接连接的方式进行通信，需要MCU与每个ECU建立连接，这种方式在ECU少的情况下尚可，但如果出现了问题，诊断起来就非常困难。</p>
+<p>此时博世的工程师就和德国几个高校的教授一起思考：有没有可能设计一种串行的通信方式，将所有的ECU挂载在总线上，通过仲裁的机制去访问不同的ECU，这样也可以避免线束过多，诊断起来也比较方便，于是乎，CAN通信就应运而生。让我们记住这几个大佬的名字：德国 Braunschweig-Wolfenbüttel 的Applied Science 大学教授 <strong>WolfhardLawrenz 博士，Karlsruhe大学的教授Horst Wettstein 博士，Bosch 公司的 Wolfgang Borst、 Wolfgang Botzenhard、Otto Karl、 Helmut Schelling、Jan Unruh，</strong>虽然我一定记不得名字，但是他们的事迹一定会一直存在在这个世界上。</p>
+<p>由于CAN通信简单，使用，可靠的特点，后来不仅仅在汽车行业，也在自动化、船舶等诸多行业发展光大，一直到21世纪20年代，仍然可以说引领者串行通信行业的发展。</p>
+<p>CAN网络是数字信号进行传输的，那么CAN的“0”和“1”怎么表示呢？这里就引入一个概念，CAN_H和CAN_L，我们通过这两个信号之间的电位差来对信号进行描述。</p>
+<p>如果CAN_H-CAN_L = 0V ，那么我们定义其为CAN信号为隐形电平</p>
+<p>如果CAN_H-CAN_L &gt; 1.5V ，那么此时我们定义CAN信号为显性电平，通常来说，这个压差只要满足1.5-2.5V之间，我们就可以认为其为显性电平。</p>
+<p><img src="https://pic.imgdb.cn/item/64f8a056661c6c8e5412c155.png" alt="Untitled"></p>
+<p>从图中我们也能看的出来，当隐性电平时，表示为逻辑1，当为显性电平时，表示为逻辑0。</p>
+<p>为什么要这么做呢？直接像SPI那样从一根线表示0和1呢？非要用相减的方法？</p>
+<p>这是因为采用这种方法可以大大得增加他的抗干扰能力，提高系统的稳定性。</p>
+<h1 id="二：CAN通信的用法"><a href="#二：CAN通信的用法" class="headerlink" title="二：CAN通信的用法"></a>二：CAN通信的用法</h1><p>前面说了CAN通信的起源，那为什么说CAN通信一出来就这么好？他优势在哪里？串行总线又是个什么东西？</p>
+<p><img src="https://pic.imgdb.cn/item/64f8a056661c6c8e5412c148.png"></p>
+<p>从这个图，大致可以看出，全部的ECU挂在一条总线上，采用CAN通信，并没有主从之分，只要总线不处于忙的状态，全部的ECU都可以在总线上发现相关报文。</p>
+<p>那么有没有可能存在一种情况，比如ECU1和ECU2同时请求在总线上发报文？</p>
+<p>实际上这种情况是存在的，这就牵扯到CAN通信的另一个知识点，仲裁机制。</p>
+<p>在介绍仲裁机制之前，先让我们来了解一下CAN通信发送的数据是什么样子的。此处以最简单的CAN通信报文为例。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HDL Bits刷题总结</title>
+    <url>/2022/11/26/hexo/HDL%20Bits%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93%2067f40aed7eee45eba03b4205751421ea/</url>
+    <content><![CDATA[<aside>
+📉 此文章记录自己在HDL Bits刷题的经验，方便之后进行回忆和总结
+</aside>
+
+<ul>
+<li><p>00_Verilog Language</p>
+<ul>
+<li><p>Basic</p>
+<ul>
+<li><p>NOR gate 或非门</p>
+  <aside>
+  📉 与门：AND
+  非门 ：NOT 
+  或门：OR
+  或非门：NOR
+  异非门：XOR     
+  异或非门：XNOR          $Y=\overline{(A+B)}$
+  或非门→输入两信号同时为0 时，才可能输出高电平1
+  </aside>
+  [![ztbVW8.png](https://s1.ax1x.com/2022/11/26/ztbVW8.png)](https://imgse.com/i/ztbVW8)
+
+  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b, </span><br><span class="line">    <span class="keyword">output</span> out );</span><br><span class="line">    </span><br><span class="line"><span class="comment">//first way</span></span><br><span class="line">    <span class="keyword">assign</span> out = ~(a|b);</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XOR gate 异或门</p>
+  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b, </span><br><span class="line">    <span class="keyword">output</span> out );</span><br><span class="line">    </span><br><span class="line"><span class="comment">//first way</span></span><br><span class="line">    <span class="keyword">assign</span> out = a^b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>XNOR gate 异或非门</p>
+  <aside>
+  📉 异或非门：XNOR      
+  $Y=\overline{(A+B)}$
+  </aside>
+  $$
+  vd
+  $$
+
+  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b, </span><br><span class="line">    <span class="keyword">output</span> out );</span><br><span class="line">    </span><br><span class="line"><span class="comment">//first way</span></span><br><span class="line">    <span class="keyword">assign</span> out = ~(a^b);</span><br><span class="line"><span class="comment">//second way</span></span><br><span class="line">		<span class="keyword">assign</span> out = a ~^ b;</span><br><span class="line"><span class="comment">//third way</span></span><br><span class="line">		<span class="keyword">assign</span> out = a ^~ b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Declaring wires 声明中间的线</p>
+<p>  <a href="https://imgse.com/i/ztbeSS"><img src="https://s1.ax1x.com/2022/11/26/ztbeSS.png" alt="ztbeSS.png"></a></p>
+  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="meta">`<span class="meta-keyword">default_nettype</span> none</span></span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> a,</span><br><span class="line">    <span class="keyword">input</span> b,</span><br><span class="line">    <span class="keyword">input</span> c,</span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> out,</span><br><span class="line">    <span class="keyword">output</span> out_n   ); </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">wire</span> w1,w2;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> w1 = a&amp;b;</span><br><span class="line">    <span class="keyword">assign</span> w2 = c&amp;d;</span><br><span class="line">    <span class="keyword">assign</span> out = w1|w2;    </span><br><span class="line">    <span class="keyword">assign</span> out_n = ~out;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>7458 Chip 芯片</p>
+<p>  <a href="https://imgse.com/i/ztbmQg"><img src="https://s1.ax1x.com/2022/11/26/ztbmQg.png" alt="ztbmQg.png"></a></p>
+  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module ( </span><br><span class="line">    <span class="keyword">input</span> p1a, p1b, p1c, p1d, p1e, p1f,</span><br><span class="line">    <span class="keyword">output</span> p1y,</span><br><span class="line">    <span class="keyword">input</span> p2a, p2b, p2c, p2d,</span><br><span class="line">    <span class="keyword">output</span> p2y );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">wire</span> p1_out1,p1_out2,p2_out1,p2_out2;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> p1_out1 = p1a &amp; p1b &amp; p1c;</span><br><span class="line">    <span class="keyword">assign</span> p1_out2 = p1d &amp; p1e &amp; p1f;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> p2_out1 = p2a &amp; p2b;</span><br><span class="line">    <span class="keyword">assign</span> p2_out2 = p2c &amp; p2d;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> p1y = p1_out1 | p1_out2;</span><br><span class="line">    <span class="keyword">assign</span> p2y = p2_out1 | p2_out2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Vectors</p>
+<ul>
+<li><p>Vectors</p>
+  <aside>
+  📉
+
+  </aside>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>01_Circuits</p>
+</li>
+<li><p>02_Verification:Reading Simulations</p>
+</li>
+<li><p>03_Verification:Wirting Testbenches</p>
+</li>
+<li><p>04_CS450</p>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>技术</category>
@@ -321,180 +495,6 @@
       </categories>
       <tags>
         <tag>教程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HDL Bits刷题总结</title>
-    <url>/2022/11/26/hexo/HDL%20Bits%E5%88%B7%E9%A2%98%E6%80%BB%E7%BB%93%2067f40aed7eee45eba03b4205751421ea/</url>
-    <content><![CDATA[<aside>
-📉 此文章记录自己在HDL Bits刷题的经验，方便之后进行回忆和总结
-</aside>
-
-<ul>
-<li><p>00_Verilog Language</p>
-<ul>
-<li><p>Basic</p>
-<ul>
-<li><p>NOR gate 或非门</p>
-  <aside>
-  📉 与门：AND
-  非门 ：NOT 
-  或门：OR
-  或非门：NOR
-  异非门：XOR     
-  异或非门：XNOR          $Y=\overline{(A+B)}$
-  或非门→输入两信号同时为0 时，才可能输出高电平1
-  </aside>
-  [![ztbVW8.png](https://s1.ax1x.com/2022/11/26/ztbVW8.png)](https://imgse.com/i/ztbVW8)
-
-  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b, </span><br><span class="line">    <span class="keyword">output</span> out );</span><br><span class="line">    </span><br><span class="line"><span class="comment">//first way</span></span><br><span class="line">    <span class="keyword">assign</span> out = ~(a|b);</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>XOR gate 异或门</p>
-  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b, </span><br><span class="line">    <span class="keyword">output</span> out );</span><br><span class="line">    </span><br><span class="line"><span class="comment">//first way</span></span><br><span class="line">    <span class="keyword">assign</span> out = a^b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>XNOR gate 异或非门</p>
-  <aside>
-  📉 异或非门：XNOR      
-  $Y=\overline{(A+B)}$
-  </aside>
-  $$
-  vd
-  $$
-
-  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b, </span><br><span class="line">    <span class="keyword">output</span> out );</span><br><span class="line">    </span><br><span class="line"><span class="comment">//first way</span></span><br><span class="line">    <span class="keyword">assign</span> out = ~(a^b);</span><br><span class="line"><span class="comment">//second way</span></span><br><span class="line">		<span class="keyword">assign</span> out = a ~^ b;</span><br><span class="line"><span class="comment">//third way</span></span><br><span class="line">		<span class="keyword">assign</span> out = a ^~ b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Declaring wires 声明中间的线</p>
-<p>  <a href="https://imgse.com/i/ztbeSS"><img src="https://s1.ax1x.com/2022/11/26/ztbeSS.png" alt="ztbeSS.png"></a></p>
-  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="meta">`<span class="meta-keyword">default_nettype</span> none</span></span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> a,</span><br><span class="line">    <span class="keyword">input</span> b,</span><br><span class="line">    <span class="keyword">input</span> c,</span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> out,</span><br><span class="line">    <span class="keyword">output</span> out_n   ); </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">wire</span> w1,w2;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> w1 = a&amp;b;</span><br><span class="line">    <span class="keyword">assign</span> w2 = c&amp;d;</span><br><span class="line">    <span class="keyword">assign</span> out = w1|w2;    </span><br><span class="line">    <span class="keyword">assign</span> out_n = ~out;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>7458 Chip 芯片</p>
-<p>  <a href="https://imgse.com/i/ztbmQg"><img src="https://s1.ax1x.com/2022/11/26/ztbmQg.png" alt="ztbmQg.png"></a></p>
-  <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module ( </span><br><span class="line">    <span class="keyword">input</span> p1a, p1b, p1c, p1d, p1e, p1f,</span><br><span class="line">    <span class="keyword">output</span> p1y,</span><br><span class="line">    <span class="keyword">input</span> p2a, p2b, p2c, p2d,</span><br><span class="line">    <span class="keyword">output</span> p2y );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">wire</span> p1_out1,p1_out2,p2_out1,p2_out2;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> p1_out1 = p1a &amp; p1b &amp; p1c;</span><br><span class="line">    <span class="keyword">assign</span> p1_out2 = p1d &amp; p1e &amp; p1f;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> p2_out1 = p2a &amp; p2b;</span><br><span class="line">    <span class="keyword">assign</span> p2_out2 = p2c &amp; p2d;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">assign</span> p1y = p1_out1 | p1_out2;</span><br><span class="line">    <span class="keyword">assign</span> p2y = p2_out1 | p2_out2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>Vectors</p>
-<ul>
-<li><p>Vectors</p>
-  <aside>
-  📉
-
-  </aside>
-</li>
-<li></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>01_Circuits</p>
-</li>
-<li><p>02_Verification:Reading Simulations</p>
-</li>
-<li><p>03_Verification:Wirting Testbenches</p>
-</li>
-<li><p>04_CS450</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>教程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SPI通信详细介绍</title>
-    <url>/2024/03/10/SPI%E9%80%9A%E4%BF%A1%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<h1 id="SPI通信详细介绍"><a href="#SPI通信详细介绍" class="headerlink" title="SPI通信详细介绍"></a>SPI通信详细介绍</h1><h1 id="SPI简要概述"><a href="#SPI简要概述" class="headerlink" title="SPI简要概述"></a>SPI简要概述</h1><p>SPI通信英文全称（Serial Peripheral Interface）串行外设接口，从其名称中可以看出，其通信方式为<strong>串行</strong>通信，其主要应用于MCU与外设之间的通信。此外，由于其通信速率较快（由SPI的<strong>SCK</strong>管脚定义），稳定可靠渐渐发展为主流的通信方式。</p>
-<h1 id="SPI信号定义"><a href="#SPI信号定义" class="headerlink" title="SPI信号定义"></a>SPI信号定义</h1><p>SPI通信一般为四根信号，分为<strong>SCK(Serial Clock)**串行时钟、</strong>CS(Chip Select)<strong>片选、</strong>MOSI(Master Output Slave Input)<strong>主发从收及</strong>MISO(Master Input Slave Output)<strong>从发主收</strong>。<strong>从信号定义可以看出其拥有系统时钟，通讯方式为</strong>同步通讯。<strong>还可以看出其收发模式可以分为主发和从发两种，由于其收发信号线为两根，因此主机在进行发送的同时，从机也可以将数据发送给主机。因此，其为全双工通信。综上所述，我们可以了解到SPI通信是一种</strong>同步、全双工、串行**的一种通讯方式。</p>
-<p>SPI分为主设备和从设备之分，但在同一个时刻，只能有一个主设备，但可以有多个从设备。主设备通过控制不同的片选引脚进而与某一个从设备建立通信。因此按照主设备与从设备的数量可以分为<strong>一对一</strong>和<strong>一对多</strong>之分。</p>
-<ul>
-<li><p>一对一<br><a href="https://imgse.com/i/pFyq6r6"><img src="https://s21.ax1x.com/2024/03/10/pFyq6r6.png" alt="pFyq6r6.png"></a></p>
-</li>
-<li><p>一对多<br><a href="https://imgse.com/i/pFyqcqK"><img src="https://s21.ax1x.com/2024/03/10/pFyqcqK.png" alt="pFyqcqK.png"></a></p>
-</li>
-</ul>
-<h1 id="SPI通信时序"><a href="#SPI通信时序" class="headerlink" title="SPI通信时序"></a>SPI通信时序</h1><aside>
-💡 当主设备对从设备发送数据时：
-
-<ol>
-<li>拉低（拉高）片选脚，选中从设备，告诉从设备预建立通信（高有效/低有效由芯片决定）</li>
-<li>主设备发送CLK信号，主从设备按照规定的CLK频率进行通信（在idle状态下的CLK初始极性（H/L）可以划分为不同的模式）</li>
-<li>主设备通过MOSI引脚发送数据到从机，其中高位先发，低位后发。SPI规定，每8/16位为一组，即（即每次最多可以传输两个字节），可以传输多次（即连续发送）</li>
-<li>从设备通过MISO引脚发送数据到主机，同MOSI引脚功能类似</aside>
-
-</li>
-</ol>
-<p><a href="https://imgse.com/i/pFyqTMt"><img src="https://s21.ax1x.com/2024/03/10/pFyqTMt.png" alt="pFyqTMt.png"></a></p>
-<h1 id="SPI模式"><a href="#SPI模式" class="headerlink" title="SPI模式"></a>SPI模式</h1><p>其中，将片选之前<strong>CLK的初始相位</strong>和<strong>开始采样的时间</strong>可以划分为<strong>四种模式</strong>：</p>
-<p><strong>CPOL</strong>：<strong>Clock Polarity</strong> 信号极性，即在片选之前（CLK空闲状态），CLK的初始相位为高（bit = 1）或低（bit = 0）</p>
-<p><strong>CPHA</strong>：<strong>Clock Phase</strong> 信号相位，定义了信号的采集时间。CPHA=0，表示在SCK的第一个跳变沿（上升沿/下降沿）进行数据采样，在第一个跳变沿进行数据传输。CPHA=1，表示在SCK的第二个跳变沿（上升沿/下降沿）进行数据采样，在第一个跳变沿进行数据传输。</p>
-<p>即信号采样时处于一个信号周期的<code>Leading</code>时刻（bit = 0）还是<code>Trailing</code>时刻（bit = 1）</p>
-<aside>
-💡 CPOL：显而易见，指的是未建立SPI通讯时，（CS脚没有被选中时），CLK引脚的初始电平状态
-CPHA：指的是建立通讯之后，信号的采样时刻在一个周期CLK的第一个/第二个边沿
-</aside>
-
-<ul>
-<li>Tip：芯片具体支持/使用的哪种SPI通讯模式由芯片本身决定（具体看芯片手册的SPI时序图）</li>
-</ul>
-<p>具体可以表示为：</p>
-<table>
-<thead>
-<tr>
-<th>SPI_Mode</th>
-<th>CPOL</th>
-<th>CPHA</th>
-<th>空闲时SCK状态</th>
-<th>采样时刻</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>低电平</td>
-<td>CLK的第一个跳变沿</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>低电平</td>
-<td>CLK的第二个跳变沿</td>
-</tr>
-<tr>
-<td>2</td>
-<td>1</td>
-<td>0</td>
-<td>高电平</td>
-<td>CLK的第一个跳变沿</td>
-</tr>
-<tr>
-<td>3</td>
-<td>1</td>
-<td>1</td>
-<td>高电平</td>
-<td>CLK的第二个跳变沿</td>
-</tr>
-</tbody></table>
-<ul>
-<li>下面分别给出四种通讯模式下的SPI时序图（以CS低有效，一次发送8Bit的数据为例子）</li>
-</ul>
-<h3 id="Mode0：CPOL-0，CPHA-0"><a href="#Mode0：CPOL-0，CPHA-0" class="headerlink" title="Mode0：CPOL=0，CPHA=0"></a>Mode0：CPOL=0，CPHA=0</h3><p><a href="https://imgse.com/i/pFyq7sP"><img src="https://s21.ax1x.com/2024/03/10/pFyq7sP.png" alt="pFyq7sP.png"></a></p>
-<h3 id="Mode1：CPOL-0，CPHA-1"><a href="#Mode1：CPOL-0，CPHA-1" class="headerlink" title="Mode1：CPOL=0，CPHA=1"></a>Mode1：CPOL=0，CPHA=1</h3><p><a href="https://imgse.com/i/pFyqHqf"><img src="https://s21.ax1x.com/2024/03/10/pFyqHqf.png" alt="pFyqHqf.png"></a></p>
-<h3 id="Mode2：CPOL-1，CPHA-0"><a href="#Mode2：CPOL-1，CPHA-0" class="headerlink" title="Mode2：CPOL=1，CPHA=0"></a>Mode2：CPOL=1，CPHA=0</h3><p><a href="https://imgse.com/i/pFyqLdS"><img src="https://s21.ax1x.com/2024/03/10/pFyqLdS.png" alt="pFyqLdS.png"></a></p>
-<h3 id="Mode3：CPOL-1，CPHA-1"><a href="#Mode3：CPOL-1，CPHA-1" class="headerlink" title="Mode3：CPOL=1，CPHA=1"></a>Mode3：CPOL=1，CPHA=1</h3><p><a href="https://imgse.com/i/pFyqqZ8"><img src="https://s21.ax1x.com/2024/03/10/pFyqqZ8.png" alt="pFyqqZ8.png"></a></p>
-<h1 id="伪代码实现"><a href="#伪代码实现" class="headerlink" title="伪代码实现"></a>伪代码实现</h1><p>在数据发送过程中，主设备通过MOSI线发送数据，从设备通过MISO线接收数据。数据的发送速率由CLK信号的频率决定。SPI协议支持全双工通信，即在主设备发送数据的同时，也可以接收从设备的数据。</p>
-<p>在代码实现过程中，首先需要配置SPI的工作模式，然后在主设备上设置CS信号为低电平（<strong>假设低有效</strong>），使从设备被选中。然后，主设备通过MOSI线发送数据，从设备通过MISO线接收数据。数据发送完毕后，主设备将CS信号设置为高电平，结束数据传输。</p>
-<p>以下是SPI通信的伪代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 配置SPI为Mode0</span><br><span class="line">SPI_Config(Mode0);</span><br><span class="line">&#x2F;&#x2F; 设置CS信号为低电平</span><br><span class="line">CS &#x3D; 0;</span><br><span class="line">&#x2F;&#x2F; 通过MOSI线发送数据</span><br><span class="line">SPI_Send(data);</span><br><span class="line">&#x2F;&#x2F; 通过MISO线接收数据</span><br><span class="line">data &#x3D; SPI_Receive();</span><br><span class="line">&#x2F;&#x2F; 设置CS信号为高电平</span><br><span class="line">CS &#x3D; 1;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>SPI</tag>
       </tags>
   </entry>
 </search>
